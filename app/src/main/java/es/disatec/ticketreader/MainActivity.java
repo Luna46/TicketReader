@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.nfc.NdefMessage;
@@ -15,10 +16,15 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -94,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+
 //        String tockenId = FirebaseInstanceId.getInstance().getToken();
 //        Log.d(TAG, "InstanceID token: " + tockenId );
 
@@ -107,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        startService(new Intent(this, SendUIDIntentService.class));
+        //startService(new Intent(this, SendUIDIntentService.class));
         //TicketServerWS.setnewTokenID("a","b");
         //mTextView = (TextView) findViewById(R.id.textView_explanation);
 
@@ -116,16 +125,19 @@ public class MainActivity extends AppCompatActivity {
         if (mNfcAdapter == null) {
 
 
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            handleIntent(getIntent());
             //StartSchedule(); // Si no tenemos NFC funcionamos por triggers del servidor
             // Stop here, we definitely need NFC
             Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
-            finish();
+            //finish();
             return;
 
         }
 
         if (!mNfcAdapter.isEnabled()) {
-            //mTextView.setText("NFC is disabled.");
+            Toast.makeText(this, "NFC is disable.", Toast.LENGTH_LONG).show();
         } else {
             //mTextView.setText(R.string.explanation);
         }
@@ -133,10 +145,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Crear un mensaje NDEF para envio en background
-        mMessage = new NdefMessage(
-                new NdefRecord[] { newTextRecord("NDEF Push Sample ewew", Locale.ENGLISH, true)});
+        //mMessage = new NdefMessage(
+        //        new NdefRecord[] { newTextRecord("NDEF Push Sample ewew", Locale.ENGLISH, true)});
 
-        mNfcAdapter.setNdefPushMessage(mMessage, this);
+        //mNfcAdapter.setNdefPushMessage(mMessage, this);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -168,6 +180,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+
+            case R.id.action_favorite:
+                TicketConstants.UID = PreferenceManager.getDefaultSharedPreferences(this).getString("ticket_UID", "000");
+                startService(new Intent(this, SendUIDIntentService.class));
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         /**
          * This method gets called, when a new Intent gets associated with the current activity instance.
@@ -183,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO: handle Intent
         TextView mText = (TextView) findViewById(R.id.mTextView);
 
-        mText.setText("Hello here");
+        mText.setText("");
         //mTextView.setText("Readed content ");
         String action = intent.getAction();
         TextView mTextAction = (TextView) findViewById(R.id.textAction);
@@ -200,6 +241,9 @@ public class MainActivity extends AppCompatActivity {
             //String resultText = processText(message);
             WebView webview = (WebView) findViewById(R.id.webview);
             webview.getSettings().setJavaScriptEnabled(true);
+            //webview.loadData(resultText, "text/html", null);
+
+            //resultText = "<b>Esto es una kk</b><br>Otro";
             webview.loadDataWithBaseURL("file:///android_asset/", resultText, "text/html", "UTF-8", "");
 
         }
@@ -252,6 +296,12 @@ public class MainActivity extends AppCompatActivity {
      * @param adapter The {@link NfcAdapter} used for the foreground dispatch.
      */
     public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+
+        FirebaseMessagingServiceImp.SetResumed();
+
+        if (adapter == null)
+            return;
+
         final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
@@ -271,8 +321,8 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException("Check your mime type.");
         }
 
-        //adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
-        adapter.enableForegroundDispatch(activity, pendingIntent, null, null);
+        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+        //adapter.enableForegroundDispatch(activity, pendingIntent, null, null);
     }
 
     /**
@@ -280,7 +330,10 @@ public class MainActivity extends AppCompatActivity {
      * @param adapter The {@link NfcAdapter} used for the foreground dispatch.
      */
     public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        adapter.disableForegroundDispatch(activity);
+        FirebaseMessagingServiceImp.SetPaused();
+
+        if (adapter != null)
+            adapter.disableForegroundDispatch(activity);
     }
 
 

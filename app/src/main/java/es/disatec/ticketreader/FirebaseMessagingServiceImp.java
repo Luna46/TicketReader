@@ -21,7 +21,24 @@ import java.util.Map;
 
 public class FirebaseMessagingServiceImp extends FirebaseMessagingService {
 
+
+    private static Boolean isForeground = false;
+
+
     private static final String TAG = "MyFirebaseMsgService";
+
+    /**
+     * For foreground proposites
+     */
+    public static void SetResumed()
+    {
+        isForeground = false;
+    }
+
+    public static void SetPaused()
+    {
+        isForeground = true;
+    }
 
     /**
      * Called when message is received.
@@ -35,16 +52,24 @@ public class FirebaseMessagingServiceImp extends FirebaseMessagingService {
         // If the application is in the foreground handle both data and notification messages here.
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-                Log.d(TAG, "From: " + remoteMessage.getFrom());
+        //Log.d(TAG, "From: " + remoteMessage.getFrom());
+        //Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
         Map<String, String> m = remoteMessage.getData();
         String comercio = m.get("comercio");
         String grupo = m.get("grupo");
         TicketConstants.lastTicket = m.get("ticket");
 
-        //Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
-
-        sendNotification(grupo, comercio);
+        // Si está visible, se muestra el mensaje directamente, sino se crea una notificación
+        if (!isForeground) {
+            Intent i = new Intent();
+            i.setClass(this, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+        }
+        else {
+            sendNotification(grupo, comercio);
+        }
     }
     // [END receive_message]
 

@@ -8,7 +8,7 @@ import java.util.Vector;
  * Created by Pepe on 10/06/2016.
  */
 public class VirtualPrinter {
-    int [] cadenasDeControl = {10,27,28,29};
+    int [] cadenasDeControl = {10,24,27,28,29};
 
 
     int [] frmSinFormato = {27,33,0};
@@ -30,6 +30,7 @@ public class VirtualPrinter {
     int [] frmSecuenciaCambioPagina = {12};
     int [] frmSecuenciaInicial = {24,27,64,27,33,0};
     int [] frmSecuenciaFinal = {29,86,65,0,27,64};
+    int [] frmSecuenciaArranque = {28,112,1,0};
     int [] frmSimboloEuro = {27,116,19,213};
     int [] frmComprimida = {27,33,1};
     int [] frmSeparacionEntreLineas = {27,51,18};
@@ -78,7 +79,7 @@ public class VirtualPrinter {
                 frmAltaNegrita,frmAltaSubrallado, frmAltaNegritaSubrallado, frmAncho, frmAnchoNegrita,  frmAnchoSubrallado, frmAnchoNegritaSubrallado,
                 frmAnchoAlta,frmAnchoNegritaAlta, frmAnchoAltaSubrallado, frmAnchoAltaSubralladoNegrita, frmSecuenciaCambioPagina, frmSecuenciaInicial, frmSecuenciaFinal,
                 frmSimboloEuro, frmComprimida,frmSeparacionEntreLineas, frmSeparacionEntreLineasDefecto, frmTamanoFuenteNumeroServicio,
-                frmAnchoCodigoBarras, frmAlturaCodigoBarras, frmPrintBarCode, frmSelectPrintPositionCode};
+                frmAnchoCodigoBarras, frmAlturaCodigoBarras, frmPrintBarCode, frmSelectPrintPositionCode, frmSecuenciaArranque};
     }
 
 
@@ -104,6 +105,9 @@ public class VirtualPrinter {
         String resultText = "";
         if (tipoEvaluar == frmSimboloEuro) {
             return "&euro;";
+        } else
+        if (tipoEvaluar == frmSecuenciaInicial || tipoEvaluar == frmSecuenciaFinal  || tipoEvaluar== frmSecuenciaArranque) {
+            return "";   // De momento las ignoro
         }
         else if (tipoEvaluar == frmPrintBarCode) {
             String strBarCode = "";
@@ -247,7 +251,7 @@ public class VirtualPrinter {
     {
         String resultText = "<html style=' font-family: \"Courier\"; font-size: 14px'><body style='margin:2px;'>";
 
-        resultText += "<div style='min-height:17px;'><div style='float:left'>";
+        resultText += "<div style='height:17px;width:100%'><div style='float:left'>";
         for (int i=0; i<text.length; i++) {
             boolean bMismatch = false;
 
@@ -297,10 +301,10 @@ public class VirtualPrinter {
                 switch (ch) {
                     // retornos de carro
                     case '\n':
-                        resultText += "</div></div>";
+                        resultText += "</div><br></div>";
                         for (int iExtra=0;iExtra<extraline;iExtra++)
                             resultText += "<br>";
-                        resultText += "<div style='min-height:17px;'><div style='float:left'>";
+                        resultText += "<div style='min-height:17px;min-width:100%'><div style='float:left'>";
                         extraline = 0;
                         break;
 

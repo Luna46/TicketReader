@@ -8,7 +8,10 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class FirebaseInstanceIdServiceImp extends FirebaseInstanceIdService {
 
+
     private static final String TAG = "MyFirebaseIIDService";
+
+
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
