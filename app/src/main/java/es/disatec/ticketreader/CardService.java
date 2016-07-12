@@ -42,9 +42,10 @@ public class CardService extends HostApduService {
     private static final String SELECT_APDU_HEADER = "00A40400";
     // "OK" status word sent in response to SELECT AID command (0x9000)
     private static final byte[] SELECT_OK_SW = HexStringToByteArray("9000");
-    private byte[] SELECT_START_ACCOUNT = {0x01, 0x07}; // 0x03 envia al servidor y por HCE
+    private byte[] SELECT_START_ACCOUNT = {0x01, 0x03}; // 0x03 envia al servidor y por HCE
                                                         // 0X01 solo lo envia por HCE
                                                         //0X02 solo guarda
+                                                        // 0x04 envia alarma desde el servidor
 
     // "UNKNOWN" status word sent in response to invalid APDU command (0x0000)
     private static final byte[] UNKNOWN_CMD_SW = HexStringToByteArray("0000");
@@ -52,6 +53,11 @@ public class CardService extends HostApduService {
 
     private static boolean bStartTicket = true;
     List<Byte> messageBytes = new ArrayList<Byte>();
+
+    // grupo y comercio, me lo transmitirán por HCE
+    private static String grupo = "";
+    private static String comercio = "";
+
 
     /**
      * Called if the connection to the NFC card is lost, in order to let the application know the
@@ -120,9 +126,32 @@ public class CardService extends HostApduService {
                 TicketConstants.lastTicket = Base64.encodeToString(myArray, Base64.DEFAULT);
                 //TicketConstants.lastTicket = byteFinal;
 
-                sendNotification("Abades","Loja");
+                NotificationMessage.showNotification(this, grupo,comercio);
                 // Notificar el nuevo ticket
 
+
+                byte[] bytesReturn = {0x00, commandApdu[1]};
+                return ConcatArrays(bytesReturn, SELECT_OK_SW);
+            }
+            // Datos de la configuración, grupo y comercio
+            else if ((commandApdu[1] & 0xFF) == 0xC1) {
+                Log.i(TAG, "C1 commiand received");
+
+                int codigoRaspberry = (commandApdu[2] << 8) + commandApdu[3];
+                int codigoComercio = (commandApdu[4] << 8) + commandApdu[5];
+
+                grupo = "";
+                for(int i= 7;i<7+commandApdu[6];i++)
+                    grupo += (char)commandApdu[i];
+
+                int posicionComercio = 7+commandApdu[6];
+
+                comercio = "";
+                for (int i= posicionComercio+1; i<commandApdu.length;i++)
+                {
+                    comercio += (char)commandApdu[i];
+                }
+                // Nos quedamos con el comercio y el grupo para posteriormente mostrarlo
 
                 byte[] bytesReturn = {0x00, commandApdu[1]};
                 return ConcatArrays(bytesReturn, SELECT_OK_SW);
@@ -142,26 +171,6 @@ public class CardService extends HostApduService {
     }
 
 
-    private void sendNotification(String grupo, String comercio) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_action_name)
-                .setContentTitle("Nuevo ticket de " + grupo)
-                .setContentText(comercio)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-    }
 
 
     // END_INCLUDE(processCommandApdu)

@@ -22,23 +22,9 @@ import java.util.Map;
 public class FirebaseMessagingServiceImp extends FirebaseMessagingService {
 
 
-    private static Boolean isForeground = false;
 
 
     private static final String TAG = "MyFirebaseMsgService";
-
-    /**
-     * For foreground proposites
-     */
-    public static void SetResumed()
-    {
-        isForeground = false;
-    }
-
-    public static void SetPaused()
-    {
-        isForeground = true;
-    }
 
     /**
      * Called when message is received.
@@ -60,42 +46,11 @@ public class FirebaseMessagingServiceImp extends FirebaseMessagingService {
         String grupo = m.get("grupo");
         TicketConstants.lastTicket = m.get("ticket");
 
-        // Si está visible, se muestra el mensaje directamente, sino se crea una notificación
-        if (!isForeground) {
-            Intent i = new Intent();
-            i.setClass(this, MainActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i);
-        }
-        else {
-            sendNotification(grupo, comercio);
-        }
+        NotificationMessage.showNotification(this, grupo, comercio);
+
+
+
     }
     // [END receive_message]
 
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param grupo FCM message body received.
-     */
-    private void sendNotification(String grupo, String comercio) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_action_name)
-                .setContentTitle("Nuevo ticket de " + grupo)
-                .setContentText(comercio)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-    }
 }

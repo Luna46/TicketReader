@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
 
-        FirebaseMessagingServiceImp.SetResumed();
+        NotificationMessage.SetResumed();
 
         if (adapter == null)
             return;
@@ -330,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
      * @param adapter The {@link NfcAdapter} used for the foreground dispatch.
      */
     public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
-        FirebaseMessagingServiceImp.SetPaused();
+        NotificationMessage.SetPaused();
 
         if (adapter != null)
             adapter.disableForegroundDispatch(activity);
