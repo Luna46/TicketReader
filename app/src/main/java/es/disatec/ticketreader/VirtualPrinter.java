@@ -1,5 +1,6 @@
 package es.disatec.ticketreader;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -247,8 +248,7 @@ public class VirtualPrinter {
      * @param text
      * @return html
      */
-    public String processText(byte[] text)
-    {
+    public String processText(byte[] text)  {
         String resultText = "<html style=' font-family: \"Courier\"; font-size: 14px'><body style='margin:2px;'>";
 
         resultText += "<div style='height:17px;width:100%'><div style='float:left'>";
@@ -297,7 +297,7 @@ public class VirtualPrinter {
             }
 
             if (!bMismatch) {
-                byte ch = text[i];
+                byte ch = (byte)(text[i] & 0xFF);
                 switch (ch) {
                     // retornos de carro
                     case '\n':
@@ -313,8 +313,11 @@ public class VirtualPrinter {
                         resultText += "&nbsp;";
                         break;
 
-                    default:
-                        resultText+=(char)ch;
+                    default: {
+
+                        char s = ExtendedASCII.getAscii(ch & 0xFF);
+                        resultText += s;
+                    }
                 }
             }
 
