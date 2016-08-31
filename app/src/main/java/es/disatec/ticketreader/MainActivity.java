@@ -147,6 +147,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        WebView webview = (WebView) findViewById(R.id.webview);
+        webview.getSettings().setJavaScriptEnabled(true);
+        //webview.loadData(resultText, "text/html", null);
+
+        String resultText = "<html>" +
+                "<head><style>@font-face {\n" +
+                "    font-family: 'courier2';\n" +
+                "    src: url('COURIER.ttf');\n" +
+                "}\n</style></head>" +
+                "<body style='font-family: \"courier2\"; font-size: 14px; margin:2px;'>";
+
+        resultText += "<b>HELLO</b>" +
+                "</body></html>";
+        //resultText += "<b>Esto es una kk</b><br>Otro";
+        webview.loadDataWithBaseURL("file:///android_asset/", resultText, "text/html", "UTF-8", "");
+
         // Crear un mensaje NDEF para envio en background
         //mMessage = new NdefMessage(
         //        new NdefRecord[] { newTextRecord("NDEF Push Sample ewew", Locale.ENGLISH, true)});
@@ -246,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
             webview.getSettings().setJavaScriptEnabled(true);
             //webview.loadData(resultText, "text/html", null);
 
-            //resultText = "<b>Esto es una kk</b><br>Otro";
+            //resultText += "<b>Esto es una kk</b><br>Otro";*/
             webview.loadDataWithBaseURL("file:///android_asset/", resultText, "text/html", "UTF-8", "");
 
         }

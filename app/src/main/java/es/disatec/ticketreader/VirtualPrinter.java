@@ -148,6 +148,7 @@ public class VirtualPrinter {
 
             if (bold)
             {
+                //resultText += "</div>";
                 resultText += "</b>";
                 bold = false;
             }
@@ -205,16 +206,9 @@ public class VirtualPrinter {
             bold = true;
         }
 
-
+        //doublestrike = false;
+        //doublewidth = false;
         /***** Se evaluan todas las combinaciones de posibles fuentes *****/
-        if (bold) {
-            resultText+="<b>";
-        }
-
-        if (underlined) {
-            resultText += "<u>";
-        }
-
         if (doublewidth || doublestrike)
         {
             extraline = 0;
@@ -238,6 +232,18 @@ public class VirtualPrinter {
 
 
 
+        if (bold) {
+            //resultText+="<div style='font-weight: bolder'>";
+            resultText+="<b>";
+        }
+
+        if (underlined) {
+            resultText += "<u>";
+        }
+
+
+
+
 
         return resultText;
 
@@ -249,7 +255,9 @@ public class VirtualPrinter {
      * @return html
      */
     public String processText(byte[] text)  {
-        String resultText = "<html style=' font-family: \"Courier\"; font-size: 14px'><body style='margin:2px;'>";
+        String resultText = "<html>" +
+                "<head><LINK href=\"ticket.css\" type=\"text/css\" rel=\"stylesheet\"/></head>" +
+                "<body style='margin:2px;'>";
 
         resultText += "<div style='height:17px;width:100%'><div style='float:left'>";
         for (int i=0; i<text.length; i++) {
@@ -323,7 +331,7 @@ public class VirtualPrinter {
 
         }
 
-        resultText += "</div></p><br></body></html>";
+        resultText += "</div></div><br></body></html>";
         return resultText;
     }
 
