@@ -8,6 +8,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
 import android.util.Log;
@@ -99,8 +100,13 @@ public class CardService extends HostApduService {
             messageBytes.clear();
             //TicketConstants.lastTicket = "";
             String UID = TicketConstants.UID;
+            String modeSendStr = PreferenceManager.getDefaultSharedPreferences(this).getString("mode_list", "0x04");
+            // Lo cargo en el momento de enviarlo
+            TicketConstants.modeSend = Integer.parseInt(modeSendStr);
+            byte mode = (byte)TicketConstants.modeSend;
             byte[] accountBytes = UID.getBytes();
             Log.i(TAG, "Sending UID number: " + UID);
+            SELECT_START_ACCOUNT[1] = mode;
             return ConcatArrays(SELECT_START_ACCOUNT, accountBytes, SELECT_OK_SW);
         } else {
             if ((commandApdu[1] & 0xFF) == 0xDA) {

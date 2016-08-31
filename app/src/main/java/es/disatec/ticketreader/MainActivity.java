@@ -116,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // Cargo la configuración para
+        TicketConstants.UID = PreferenceManager.getDefaultSharedPreferences(this).getString("ticket_UID", "000");
+
         //startService(new Intent(this, SendUIDIntentService.class));
         //TicketServerWS.setnewTokenID("a","b");
         //mTextView = (TextView) findViewById(R.id.textView_explanation);

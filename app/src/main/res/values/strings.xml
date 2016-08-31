@@ -32,6 +32,17 @@
         <item>-1</item>
     </string-array>
 
+    <string name="pref_title_mode_communication">Comunication mode</string>
+    <string-array name="pref_modo_comunicacion_titles">
+        <item>Only ID</item>
+        <item>Complete transfer</item>
+    </string-array>
+    <string-array name="pref_modo_comunicacion_list_values">
+        <item>6</item>
+        <item>3</item>
+    </string-array>
+
+
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
 
