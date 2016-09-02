@@ -19,7 +19,8 @@ public class VirtualPrinter {
     int [] frmAlta = {27,33,16};
     int [] frmAltaNegrita = {27,33,24};
     int [] frmAltaSubrallado = {27,33,144};
-    int [] frmAltaNegritaSubrallado = {27,33,152};
+    int [] frmAltaNegritaSubrallado = {27,33,152}; // !!!!! En la configuración de ABADES está como 152, pero envia un 63!!!!
+    int [] frmAltaNegritaSubralladoAbades = {27,33,63}; // !!!!! En la configuración de ABADES está como 152, pero envia un 63!!!!
     int [] frmAncho = {27,33,32};
     int [] frmAnchoNegrita = {27,33,40};
     int [] frmAnchoSubrallado = {27,33,160};
@@ -77,7 +78,7 @@ public class VirtualPrinter {
     public void Initialize()
     {
         tiposPosibles = new int[][] {frmSinFormato, frmNegrita, frmSubrallado, frmSubralladoNegrita, frmAlta,
-                frmAltaNegrita,frmAltaSubrallado, frmAltaNegritaSubrallado, frmAncho, frmAnchoNegrita,  frmAnchoSubrallado, frmAnchoNegritaSubrallado,
+                frmAltaNegrita,frmAltaSubrallado, frmAltaNegritaSubrallado, frmAltaNegritaSubralladoAbades, frmAncho, frmAnchoNegrita,  frmAnchoSubrallado, frmAnchoNegritaSubrallado,
                 frmAnchoAlta,frmAnchoNegritaAlta, frmAnchoAltaSubrallado, frmAnchoAltaSubralladoNegrita, frmSecuenciaCambioPagina, frmSecuenciaInicial, frmSecuenciaFinal,
                 frmSimboloEuro, frmComprimida,frmSeparacionEntreLineas, frmSeparacionEntreLineasDefecto, frmTamanoFuenteNumeroServicio,
                 frmAnchoCodigoBarras, frmAlturaCodigoBarras, frmPrintBarCode, frmSelectPrintPositionCode, frmSecuenciaArranque};
@@ -175,7 +176,7 @@ public class VirtualPrinter {
         } else if (tipoEvaluar == frmAltaSubrallado) {
             underlined = true;
             doublestrike = true;
-        } else if (tipoEvaluar == frmAltaNegritaSubrallado) {
+        } else if (tipoEvaluar == frmAltaNegritaSubrallado || tipoEvaluar == frmAltaNegritaSubralladoAbades) {
             underlined = true;
             bold = true;
             doublestrike = true;

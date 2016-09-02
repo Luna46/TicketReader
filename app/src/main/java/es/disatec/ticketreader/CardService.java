@@ -109,7 +109,7 @@ public class CardService extends HostApduService {
             SELECT_START_ACCOUNT[1] = mode;
             return ConcatArrays(SELECT_START_ACCOUNT, accountBytes, SELECT_OK_SW);
         } else {
-            if ((commandApdu[1] & 0xFF) == 0xDA) {
+            if ((commandApdu[1] & 0xFF) >= 0xDA && (commandApdu[1] & 0xFF) <0XFD) {
 
                 Log.i(TAG, "Write command received");
 
@@ -118,8 +118,9 @@ public class CardService extends HostApduService {
 
                 byte[] bytesReturn = {0x00, commandApdu[1]};
                 return ConcatArrays(bytesReturn, SELECT_OK_SW);
-            } else if ((commandApdu[1] & 0xFF) == 0xDB) {
-                Log.i(TAG, "DB ommand received");
+
+            } else if ((commandApdu[1] & 0xFF) == 0xFD) {
+                Log.i(TAG, "FD ommand received");
 
                 for(int i= 2;i<commandApdu.length;i++)
                     messageBytes.add(commandApdu[i]);
