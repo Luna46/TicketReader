@@ -151,15 +151,70 @@ public class MainActivity extends AppCompatActivity {
         webview.getSettings().setJavaScriptEnabled(true);
         //webview.loadData(resultText, "text/html", null);
 
-        String resultText = "<html>" +
-                "<head><style>@font-face {\n" +
-                "    font-family: 'courier2';\n" +
-                "    src: url('COURIER.ttf');\n" +
-                "}\n</style></head>" +
-                "<body style='font-family: \"courier2\"; font-size: 14px; margin:2px;'>";
+        String resultText = "<html><head><LINK href=\"ticket.css\" type=\"text/css\" rel=\"stylesheet\"/></head>" +
+                "<body style='margin:2px;'>";
 
-        resultText += "<b>HELLO</b>" +
-                "</body></html>";
+        resultText += "<div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;<b></div><div style='float:left; min-height:30px; margin-left:-1px; transform: scale(2,3); ms-transform: scale(2,3); -webkit-transform: scale(2,3); -moz-transform:scale(2,3); -o-transform:scale(2,3); position:relative; transform-origin: top left;-webkit-transform-origin: top left;-moz-transform-origin: top left; -o-transform-origin: top left;'>FREE&nbsp;FLOW&nbsp;ABADES&nbsp;&nbsp;</b></div><div  style='float:left'>\n" +
+                "</div></div><br><br><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A92&nbsp;KM&nbsp;192&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;18300&nbsp;LOJA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GRANADA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TLF:902323800&nbsp;&nbsp;&nbsp;&nbsp;CIF:B18410209&nbsp;\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;<b>GESTION&nbsp;Y&nbsp;EXPLOTACION&nbsp;DE&nbsp;REST.&nbsp;S.L</b>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>----------------------------------------\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'><b>FACTURA&nbsp;SIMPLIFICADA</b>&nbsp;&nbsp;&nbsp;&nbsp;<b>FECHA:</b>03/08/2016\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'><b>SERIE/NUMERO</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>HORA:</b>&nbsp;9:24:12&nbsp;\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>T003/818718&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>SALA:</b>&nbsp;0&nbsp;&nbsp;<b>PAX:</b>&nbsp;&nbsp;0\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'><b>CAMARERO:</b>JUAN&nbsp;PEREZ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>MESA:</b>&nbsp;<b>1&nbsp;&nbsp;</b><b>CAJA:</b>&nbsp;3\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'><b>CLIENTE:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'><b>NIF/CIF:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'><b>UDS</b>&nbsp;&nbsp;<b>DESCRIPCION</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PVP</b>&nbsp;&nbsp;<b>IMPORTE</b>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>----------------------------------------\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;MEDIA&nbsp;DOCENA&nbsp;HUESO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4,50&nbsp;&nbsp;&nbsp;&nbsp;4,50\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;TARTA&nbsp;ABADES&nbsp;Porci&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2,00&nbsp;&nbsp;&nbsp;&nbsp;2,00\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;DONUTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,25&nbsp;&nbsp;&nbsp;&nbsp;1,25\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;PALMERA&nbsp;O&nbsp;CROISSAN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,60&nbsp;&nbsp;&nbsp;&nbsp;1,60\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;MUFFIN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2,80&nbsp;&nbsp;&nbsp;&nbsp;2,80\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;ROSCOS&nbsp;HUEVO&nbsp;TOJUN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7,00&nbsp;&nbsp;&nbsp;&nbsp;7,00\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;ROSCOS&nbsp;SANTA&nbsp;CLARA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4,95&nbsp;&nbsp;&nbsp;&nbsp;4,95\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;ROSCOS&nbsp;ANIS&nbsp;TOJUNT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6,00&nbsp;&nbsp;&nbsp;&nbsp;6,00\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;PASTAS&nbsp;TE&nbsp;Uds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,60&nbsp;&nbsp;&nbsp;&nbsp;0,60\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;MEDIA&nbsp;DOCENA&nbsp;PIONO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8,00&nbsp;&nbsp;&nbsp;&nbsp;8,00\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;HIGOS&nbsp;SECOS&nbsp;BANDEJ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5,70&nbsp;&nbsp;&nbsp;&nbsp;5,70\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;BOLLYCAO&nbsp;NORMAL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,10&nbsp;&nbsp;&nbsp;&nbsp;1,10\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;DONUTS&nbsp;B&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,95&nbsp;&nbsp;&nbsp;&nbsp;1,95\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;MEDIA&nbsp;DOCENA&nbsp;PIONO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8,00&nbsp;&nbsp;&nbsp;&nbsp;8,00\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;SANDWICH&nbsp;VARIOS&nbsp;ES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3,20&nbsp;&nbsp;&nbsp;&nbsp;3,20\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;BOCAD.JAMON&nbsp;SERRAN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3,50&nbsp;&nbsp;&nbsp;&nbsp;3,50\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;BOCAD.LOMO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4,20&nbsp;&nbsp;&nbsp;&nbsp;4,20\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;BOCAD.TERNERA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5,00&nbsp;&nbsp;&nbsp;&nbsp;5,00\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;TARTA&nbsp;ESPECIAL&nbsp;ABA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2,50&nbsp;&nbsp;&nbsp;&nbsp;2,50\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;BOTELLA&nbsp;75CL&nbsp;A ARE&nbsp;&nbsp;&nbsp;&nbsp;10,30&nbsp;&nbsp;&nbsp;10,30\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;BOCAD.TORTILLA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3,50&nbsp;&nbsp;&nbsp;&nbsp;3,50\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;BOLSA&nbsp;PATATAS&nbsp;MEDI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,70&nbsp;&nbsp;&nbsp;&nbsp;1,70\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;CARAMELOS&nbsp;MIEL&nbsp;LIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3,50&nbsp;&nbsp;&nbsp;&nbsp;3,50\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;BOLSA&nbsp;PATATAS&nbsp;GRAN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2,50&nbsp;&nbsp;&nbsp;&nbsp;2,50\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;YOGOURT&nbsp;DANONE&nbsp;ACT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,50&nbsp;&nbsp;&nbsp;&nbsp;1,50\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;YOGOURT&nbsp;DANONE&nbsp;NAT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,20&nbsp;&nbsp;&nbsp;&nbsp;1,20\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;YOGOURT&nbsp;DANONE&nbsp;SAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,20&nbsp;&nbsp;&nbsp;&nbsp;1,20\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;AGUA&nbsp;EVIAN&nbsp;75CL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2,30&nbsp;&nbsp;&nbsp;&nbsp;2,30\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;COPA&nbsp;LICOR&nbsp;PACHARA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2,50&nbsp;&nbsp;&nbsp;&nbsp;2,50\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;1&nbsp;BOTELLA&nbsp;75CL&nbsp;MONTE&nbsp;&nbsp;&nbsp;&nbsp;13,00&nbsp;&nbsp;&nbsp;13,00\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>========================================\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BASE&nbsp;IMP.&nbsp;&nbsp;&nbsp;106,71\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IVA&nbsp;10%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10,12\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b></div><div style='float:left; min-height:30px; margin-left:-1px; transform: scale(1,2); ms-transform: scale(1,2); -webkit-transform: scale(1,2); -moz-transform:scale(1,2); -o-transform:scale(1,2); position:relative; transform-origin: top left;-webkit-transform-origin: top left;-moz-transform-origin: top left; -o-transform-origin: top left;'>TOTAL</b></div><div  style='float:left'>&nbsp;&nbsp;&nbsp;<b></div><div style='float:left; min-height:30px; margin-left:-1px; transform: scale(1,2); ms-transform: scale(1,2); -webkit-transform: scale(1,2); -moz-transform:scale(1,2); -o-transform:scale(1,2); position:relative; transform-origin: top left;-webkit-transform-origin: top left;-moz-transform-origin: top left; -o-transform-origin: top left;'>&nbsp;&nbsp;&nbsp;&nbsp;117,05</b></div><div  style='float:left'>\n" +
+                "</div></div><br><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENTREGADO&nbsp;&nbsp;&nbsp;117,05\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CAMBIO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FORMA&nbsp;DE&nbsp;PAGO:&nbsp;&nbsp;&nbsp;CONTADO&nbsp;Euros\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;***&nbsp;GRACIAS&nbsp;POR&nbsp;SU&nbsp;VISITA&nbsp;***\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>informate&nbsp;en&nbsp;www.abades.com</b>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'>\n" +
+                "</div></div><div style='min-height:17px;'><div style='float:left'></div></p><br></body></html>";
         //resultText += "<b>Esto es una kk</b><br>Otro";
         webview.loadDataWithBaseURL("file:///android_asset/", resultText, "text/html", "UTF-8", "");
 

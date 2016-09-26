@@ -100,7 +100,7 @@ public class CardService extends HostApduService {
             messageBytes.clear();
             //TicketConstants.lastTicket = "";
             String UID = TicketConstants.UID;
-            String modeSendStr = PreferenceManager.getDefaultSharedPreferences(this).getString("mode_list", "0x04");
+            String modeSendStr = PreferenceManager.getDefaultSharedPreferences(this).getString("mode_list", "4");
             // Lo cargo en el momento de enviarlo
             TicketConstants.modeSend = Integer.parseInt(modeSendStr);
             byte mode = (byte)TicketConstants.modeSend;
