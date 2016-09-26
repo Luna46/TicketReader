@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'courier2';
+    src: url('cour.ttf');
+}
+
+body {font-family: 'courier2'; font-size:14px;}
+
+
