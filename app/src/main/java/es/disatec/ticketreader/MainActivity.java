@@ -31,10 +31,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Locale;
 
 import static java.util.Arrays.copyOfRange;
@@ -53,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextView;
     private NfcAdapter mNfcAdapter;
     private NdefMessage mMessage;
+
+    // Lista de los tickets del usuario, se carga cuando se arranca la aplicación en background
+    ArrayList<Ticket> colTickets;
+
 
 
     public static NdefRecord newTextRecord(String text, Locale locale, boolean encodeInUtf8) {
@@ -123,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
         //TicketServerWS.setnewTokenID("a","b");
         //mTextView = (TextView) findViewById(R.id.textView_explanation);
 
+        new GetDataAsync().execute("https://api.github.com/users/dmnugent80/repos");
+
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (mNfcAdapter == null) {
@@ -139,12 +153,14 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
+
+
         if (!mNfcAdapter.isEnabled()) {
             Toast.makeText(this, "NFC is disable.", Toast.LENGTH_LONG).show();
         } else {
             //mTextView.setText(R.string.explanation);
         }
-
 
 
         WebView webview = (WebView) findViewById(R.id.webview);
@@ -541,6 +557,38 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    public class GetDataAsync extends AsyncTask<String, String, Ticket> {
+
+        HttpURLConnection urlConnection;
+        @Override
+        protected Ticket doInBackground(String... args) {
+
+
+            colTickets = TicketServerWS.getTicketsByUID("0417469A483D80", false);
+            Ticket t = (Ticket)colTickets.get(colTickets.size()-1);
+            Ticket tLoaded = TicketServerWS.getTicket(t.getIdticket());
+            colTickets.set(colTickets.size()-1, tLoaded);
+            return tLoaded;
+
+        }
+
+        @Override
+        protected void onPostExecute(Ticket result) {
+
+
+            WebView webview = (WebView) findViewById(R.id.webview);
+            webview.getSettings().setJavaScriptEnabled(true);
+            //webview.loadData(resultText, "text/html", null);
+
+            webview.loadDataWithBaseURL("file:///android_asset/", result.getTicket(), "text/html", "UTF-8", "");
+
+
+        }
+
+    }
+
 
 
 

@@ -110,6 +110,8 @@ public class ProcessMessageIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        // TODO: Revisar si esto se utiliza para algo
+
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_FOO.equals(action)) {
@@ -123,9 +125,9 @@ public class ProcessMessageIntentService extends IntentService {
             }
         }
 
-        String valor = TicketServerWS.getMessage("");
+        //String valor = TicketServerWS.getMessage("");
 
-        Notify(intent, valor);
+        Notify(intent, "");
 
 
 
