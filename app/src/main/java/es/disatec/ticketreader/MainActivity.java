@@ -563,17 +563,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Actuaremos en Background para cargar en nuestro ArrayList<Ticket> colTickets todos los tickets que tenga nuestro                 servidor.
+     * Crearemos los fragments después de la ejecución del Background, diremos en que parte del layout se muestran los fragments        y seleccionamos que elemento del array es el primero que queremos mostrar en nuestro primer fragment.
+     */
     public class GetDataAsync extends AsyncTask<String, String, Ticket> {
 
         HttpURLConnection urlConnection;
         @Override
         protected Ticket doInBackground(String... args) {
-            //si es nuestra primera vez llamamos al servidor y cargamos toooooodos los tickets del servidor
+            //si es nuestra primera vez llamamos al servidor y cargamos todos los tickets qye tenga el servidor
             if (TicketConstants.colTickets == null) {
                 TicketConstants.colTickets = TicketServerWS.getTicketsByUID(TicketConstants.UID, false);
             }
-
             /*Ticket t = (Ticket)TicketConstants.colTickets.get(TicketConstants.colTickets.size() - 1);
             if (t.getTicket() == "") {
                 Ticket tLoaded = TicketServerWS.getTicket(t.getIdticket());
