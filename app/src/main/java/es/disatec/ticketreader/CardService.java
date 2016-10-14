@@ -130,7 +130,8 @@ public class CardService extends HostApduService {
                 for (int i = 0; i < messageBytes.size(); i++) {
                     myArray[i] = messageBytes.get(i);
                 }
-                TicketConstants.lastTicket = Base64.encodeToString(myArray, Base64.DEFAULT);
+                TicketConstants.lastTicket = new Ticket();
+                TicketConstants.lastTicket.setTicket(Base64.encodeToString(myArray, Base64.DEFAULT));
                 //TicketConstants.lastTicket = byteFinal;
 
                 NotificationMessage.showNotification(this, grupo,comercio);

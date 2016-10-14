@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+
 /**
  * Created by Pepe on 27/06/2016.
  */
@@ -47,7 +48,7 @@ public class TicketServerWS {
         Ticket t = null;
         URL url = null;
         try {
-            url = new URL("http://192.168.1.38:8080/TicketWeb/webresources/ticketPersistence/getTicketId/" + idTicket);
+            url = new URL("http://"+TicketConstants.IPAndPort+"/TicketWeb/webresources/ticketPersistence/getTicketId/" + idTicket);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -105,7 +106,7 @@ public class TicketServerWS {
         String valor = "";
         URL url = null;
         try {
-            url = new URL("http://192.168.1.38:8080/TicketWeb/webresources/ticketPersistence/getResources/"+ UID + "/" + bIncludeAllTicket);
+            url = new URL("http://"+TicketConstants.IPAndPort+"/TicketWeb/webresources/ticketPersistence/getResources/"+ UID + "/" + bIncludeAllTicket);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -165,7 +166,7 @@ public class TicketServerWS {
         URL url = null;
         try {
             //url = new URL("https://api.github.com/users/dmnugent80/repos");
-            url = new URL("http://192.168.1.38:8080/TicketWeb/webresources/path");
+            url = new URL("http://"+TicketConstants.IPAndPort+"/TicketWeb/webresources/path");
 
             //url = new URL("http://www.oracle.com");
         } catch (MalformedURLException e) {
@@ -225,7 +226,7 @@ public class TicketServerWS {
 
         URL url = null;
         try {
-            url = new URL("http://192.168.1.38:8080/TicketWeb/webresources/register");
+            url = new URL("http://"+TicketConstants.IPAndPort+"/TicketWeb/webresources/register");
 
             //url = new URL("http://www.oracle.com");
         } catch (MalformedURLException e) {

@@ -17,6 +17,8 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private NdefMessage mMessage;
 
     // Lista de los tickets del usuario, se carga cuando se arranca la aplicación en background
-    ArrayList<Ticket> colTickets;
+
 
 
 
@@ -115,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
+
+
 //        String tockenId = FirebaseInstanceId.getInstance().getToken();
 //        Log.d(TAG, "InstanceID token: " + tockenId );
 
@@ -135,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         //TicketServerWS.setnewTokenID("a","b");
         //mTextView = (TextView) findViewById(R.id.textView_explanation);
 
-        new GetDataAsync().execute("https://api.github.com/users/dmnugent80/repos");
+        new GetDataAsync().execute("");
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -163,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        WebView webview = (WebView) findViewById(R.id.webview);
+        /*WebView webview = (WebView) findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true);
         //webview.loadData(resultText, "text/html", null);
 
@@ -238,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         //mMessage = new NdefMessage(
         //        new NdefRecord[] { newTextRecord("NDEF Push Sample ewew", Locale.ENGLISH, true)});
 
-        //mNfcAdapter.setNdefPushMessage(mMessage, this);
+        //mNfcAdapter.setNdefPushMessage(mMessage, this);*/
 
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -321,12 +325,12 @@ public class MainActivity extends AppCompatActivity {
         mTextAction.setText(action);
 
 
-        if (TicketConstants.lastTicket != "")
+        /**if (TicketConstants.lastTicket != null)
         {
             VirtualPrinter vp = new VirtualPrinter();
             vp.Initialize();
 
-            byte[] message = Base64.decode(TicketConstants.lastTicket, Base64.DEFAULT);
+            byte[] message = Base64.decode(TicketConstants.lastTicket.getTicket(), Base64.DEFAULT);
             String resultText = vp.processText(message);
             //String resultText = processText(message);
             WebView webview = (WebView) findViewById(R.id.webview);
@@ -334,9 +338,10 @@ public class MainActivity extends AppCompatActivity {
             //webview.loadData(resultText, "text/html", null);
 
             //resultText += "<b>Esto es una kk</b><br>Otro";*/
+        /**
             webview.loadDataWithBaseURL("file:///android_asset/", resultText, "text/html", "UTF-8", "");
 
-        }
+        }*/
 
         if (mNfcAdapter == null) {
             return;
@@ -564,25 +569,43 @@ public class MainActivity extends AppCompatActivity {
         HttpURLConnection urlConnection;
         @Override
         protected Ticket doInBackground(String... args) {
+            //si es nuestra primera vez llamamos al servidor y cargamos toooooodos los tickets del servidor
+            if (TicketConstants.colTickets == null) {
+                TicketConstants.colTickets = TicketServerWS.getTicketsByUID(TicketConstants.UID, false);
+            }
 
-
-            colTickets = TicketServerWS.getTicketsByUID("0417469A483D80", false);
-            Ticket t = (Ticket)colTickets.get(colTickets.size()-1);
-            Ticket tLoaded = TicketServerWS.getTicket(t.getIdticket());
-            colTickets.set(colTickets.size()-1, tLoaded);
-            return tLoaded;
-
+            /*Ticket t = (Ticket)TicketConstants.colTickets.get(TicketConstants.colTickets.size() - 1);
+            if (t.getTicket() == "") {
+                Ticket tLoaded = TicketServerWS.getTicket(t.getIdticket());
+                TicketConstants.colTickets.set(TicketConstants.colTickets.size() - 1, tLoaded);
+                return tLoaded;
+            }
+            else
+                return t;
+*/
+            //no queremos devolver nada, si hay que añadir al array se añade y sino no se hace nada
+            return null;
         }
 
         @Override
         protected void onPostExecute(Ticket result) {
 
+            /** Getting a reference to the ViewPager defined the layout file */
+            ViewPager pager = (ViewPager) findViewById(R.id.pager);
 
-            WebView webview = (WebView) findViewById(R.id.webview);
-            webview.getSettings().setJavaScriptEnabled(true);
-            //webview.loadData(resultText, "text/html", null);
 
-            webview.loadDataWithBaseURL("file:///android_asset/", result.getTicket(), "text/html", "UTF-8", "");
+            /** Getting fragment manager */
+            FragmentManager fm = getSupportFragmentManager();
+
+            /** Instantiating FragmentPagerAdapter */
+            MyFragmentPagerAdapter pagerAdapter = new MyFragmentPagerAdapter(fm,TicketConstants.colTickets);
+
+            /** Setting the pagerAdapter to the pager object */
+            pager.setAdapter(pagerAdapter);
+
+            //seleccionamos el primer elemento que queremos mostrar
+            pager.setCurrentItem(TicketConstants.colTickets.size()-1);
+
 
 
         }

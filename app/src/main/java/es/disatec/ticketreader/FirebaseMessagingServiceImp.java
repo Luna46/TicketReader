@@ -12,11 +12,13 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Date;
 import java.util.Map;
 
 public class FirebaseMessagingServiceImp extends FirebaseMessagingService {
@@ -42,9 +44,29 @@ public class FirebaseMessagingServiceImp extends FirebaseMessagingService {
         //Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
         Map<String, String> m = remoteMessage.getData();
+        //damos los valores declarados por la clase Ticket al nuevo ticket que está siendo enviado
+        Integer id = -1;
         String comercio = m.get("comercio");
         String grupo = m.get("grupo");
-        TicketConstants.lastTicket = m.get("ticket");
+        String lTicket = m.get("ticket");
+        Date fecha = null;
+        Ticket t = new Ticket();
+        t.setComercio(comercio);
+        t.setGrupo(grupo);
+
+        //decodicificamos el mensaje que nos viene en "bruto" por la impresora a un lenguaje HTML
+        VirtualPrinter vp = new VirtualPrinter();
+        vp.Initialize();
+        byte[] message = Base64.decode(lTicket, Base64.DEFAULT);
+        String resultText = vp.processText(message);
+        t.setTicket(resultText);
+        t.setFecha(fecha);
+        t.setIdticket(id);
+
+        //damos el valor del ticket enviado al famoso lastTicket
+        TicketConstants.lastTicket = t;
+        //añadimos a nuestro arrayList el nuevo Ticket en camino
+        TicketConstants.colTickets.add(t);
 
         NotificationMessage.showNotification(this, grupo, comercio);
 

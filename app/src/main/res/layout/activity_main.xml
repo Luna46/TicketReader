@@ -7,6 +7,20 @@
     android:fitsSystemWindows="true"
     tools:context="es.disatec.ticketreader.MainActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="6dp"
+
+            android:paddingTop="46dp"/>
+    </RelativeLayout>
+
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
