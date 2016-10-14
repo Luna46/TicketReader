@@ -43,18 +43,27 @@ public class FirebaseMessagingServiceImp extends FirebaseMessagingService {
         //Log.d(TAG, "From: " + remoteMessage.getFrom());
         //Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
+        /**
+         * Trabajamos de esta manera ya que nos basamos en la implementacion de Google.
+         */
         Map<String, String> m = remoteMessage.getData();
-        //damos los valores declarados por la clase Ticket al nuevo ticket que está siendo enviado
+        /**
+         * Declaración de las variables características que tiene Ticket (Basado en clase Ticket).
+         */
         Integer id = -1;
         String comercio = m.get("comercio");
         String grupo = m.get("grupo");
         String lTicket = m.get("ticket");
         Date fecha = null;
+        /**
+         * Declaramos una nueva variable de tipo Ticket para darle todos los valores necesarios.
+         */
         Ticket t = new Ticket();
         t.setComercio(comercio);
         t.setGrupo(grupo);
-
-        //decodicificamos el mensaje que nos viene en "bruto" por la impresora a un lenguaje HTML
+        /**
+         * Decodicificamos el mensaje que nos viene en "bruto" por la impresora a un lenguaje HTML.
+         */
         VirtualPrinter vp = new VirtualPrinter();
         vp.Initialize();
         byte[] message = Base64.decode(lTicket, Base64.DEFAULT);
@@ -62,10 +71,10 @@ public class FirebaseMessagingServiceImp extends FirebaseMessagingService {
         t.setTicket(resultText);
         t.setFecha(fecha);
         t.setIdticket(id);
+        /**
+         * Añadimos a nuestro ArrayList<Ticket> colTickets< el nuevo Ticket que viene por alarma de Google.
+         */
 
-        //damos el valor del ticket enviado al famoso lastTicket
-        TicketConstants.lastTicket = t;
-        //añadimos a nuestro arrayList el nuevo Ticket en camino
         TicketConstants.colTickets.add(t);
 
         NotificationMessage.showNotification(this, grupo, comercio);

@@ -14,7 +14,12 @@ import java.util.ArrayList;
  */
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     ArrayList<Ticket> colTickets;
-    
+
+    /**
+     * Constructor para crear los fragments
+      * @param fm
+     * @param colTickets
+     */
     public MyFragmentPagerAdapter(FragmentManager fm, ArrayList<Ticket> colTickets)
     {
         super(fm);

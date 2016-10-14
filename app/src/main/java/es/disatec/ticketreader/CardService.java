@@ -133,7 +133,7 @@ public class CardService extends HostApduService {
                 TicketConstants.lastTicket = new Ticket();
                 TicketConstants.lastTicket.setTicket(Base64.encodeToString(myArray, Base64.DEFAULT));
                 //TicketConstants.lastTicket = byteFinal;
-
+                TicketConstants.colTickets.add(TicketConstants.lastTicket);
                 NotificationMessage.showNotification(this, grupo,comercio);
                 // Notificar el nuevo ticket
 
