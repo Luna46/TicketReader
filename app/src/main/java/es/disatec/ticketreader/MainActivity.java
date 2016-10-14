@@ -583,7 +583,7 @@ public class MainActivity extends AppCompatActivity {
             else
                 return t;
 */
-            //no queremos devolver nada, si hay que añadir al array se añade y sino no se hace nada
+            //no queremos devolver nada, si hay que añadir los tickets del servidor al array se añade y sino no se hace nada
             return null;
         }
 
